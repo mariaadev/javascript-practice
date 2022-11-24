@@ -17,27 +17,66 @@ const availableMaleNames = ['pepe', 'juan', 'victor', 'Leo', 'francisco', 'carlo
 const availableFemaleNames = ['cecilia', 'ana', 'luisa', 'silvia', 'isabel', 'virginia'];
 const availableGenders = ['male', 'female'];
 
-//Create console interface
+const options = ` 
+1- Show all students in table format.\n
+2- Show the number of students in class on the console.\n
+3- Show all the names of the students on the console.\n
+4- Delete the last student in the class.\n
+5- Delete a student randomly from the class.\n
+6- Show by console all the data of the students who are girls.\n
+7- Show the number of boys and girls in the class on the console.\n
+8- Show true or false if all the students in the class are girls on the console.\n
+9- Display the names of students between 20 and 25 years old on the console.\n
+10- Add a new student with the following data:\n
+- random name.\n
+- random age between 20 and 50 years.\n
+- random gender.\n
+- empty rating list.\n
+11- Display the name of the youngest person in the class on the console.\n
+12- Display the average age of all the students in the class on the console.\n
+13- Display the average age of the girls in the class on the console.\n
+14- Add a new score to the students. For each student in the class, we will have to calculate a score at random (number between 0 and 10) and add it to their list of notes.\n
+15- Order the array of students alphabetically according to their name.\n
+`
+async function manageStudents() {
+    //Show options
+    console.log(options);
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+    //Invalid input
+    let isInvalidInput = false;
+
+    //Create console interface
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
 
 
-//Get user input
-function getUserOption() {
-    return new Promise((resolve, reject) => {
-        rl.question('Introduce your option please: ', function(option) {
-            rl.pause();
-            const parsedOption = parseInt(option)
-            resolve(parsedOption);
-        })
-      });
+    //Get user input
+    function getUserOption() {
+        return new Promise((resolve, reject) => {
+            rl.question('Introduce the number of your option, please: ', function (option) {
+                rl.pause();
+                const parsedOption = parseInt(option)
+                resolve(parsedOption);
+            })
+        });
     }
 
-//Await promise
-const userOption = await getUserOption();
+    while (!isInvalidInput) {
+        //Await promise
+        const userOption = await getUserOption();
 
-//Close Console Interface
-rl.close();
+        //Out of the loop if invalid input
+        if (userOption <= 0 || userOption > 15) {
+            isInvalidInput = true
+            break;
+        }
+    }
+    
+        //Close Console Interface
+    rl.close();
+
+}
+
+manageStudents()
