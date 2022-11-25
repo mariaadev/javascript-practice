@@ -105,7 +105,70 @@ async function manageStudents() {
             student.gender === "male"
         ))
     }
+
+    //Option 8
+    function allGirls() {
+        return students.every(student => (
+            student.gender === "female"
+        ))
+    }
     
+    //Option 9
+    function studentsByAge() {
+        return students.filter( student => (
+            student.age >=20 && student.age <= 25
+        )
+        )
+    }
+    
+    function generateRandomAge(min, max) {
+        let difference = max - min;
+        
+        let randomNum = Math.random();
+        
+        randomNum = Math.floor( randomNum * difference) + 1;
+    
+        randomNum = randomNum + min;
+    
+        return randomNum
+    
+    }
+    function pickRandomFemaleName() {
+        const randomIndex = Math.floor(Math.random() * students.length)
+        
+        return availableFemaleNames[randomIndex]
+    }
+    function pickRandomMaleName() {
+        const randomIndex = Math.floor(Math.random() * students.length)
+        
+        return availableMaleNames[randomIndex]
+    }
+    function randomGender() {
+        const randomIndex = Math.floor(Math.random() * 2)
+        
+        return randomIndex === 1 ? "female" : "male"
+        
+    }
+    function createRandomStudent() {
+        debugger;
+        const gender = randomGender()
+       //pick name, age, gender, empty scores
+        const newStudent =  {
+        age: generateRandomAge(20,50) ,
+        examScores: [],
+        gender: gender,
+        name:gender === "female" ? pickRandomFemaleName() : pickRandomMaleName()
+       }    
+       return newStudent
+    }
+    //Option 10
+    function addStudent() {
+        const newStudent = createRandomStudent()
+        // add new student
+        students.push({newStudent})
+        return `New student: ${newStudent.name} has been added.`
+
+    }
     function fetchOutput(input) {
     
         let output;
@@ -133,13 +196,13 @@ async function manageStudents() {
                 console.log(`Girls: ${filterGirls().length}\nBoys: ${filterBoys().length}`);
                 break;
             case 8:
-                console.log('Oranges are $0.59 a pound.');
+                console.log(allGirls());
                 break;
             case 9:
-                console.log('Mangoes and papayas are $2.79 a pound.');
+                console.log(studentsByAge());
                 break;
             case 10:
-                console.log('Mangoes and papayas are $2.79 a pound.');
+                console.log(addStudent());
                 break;
             case 11:
                 console.log('Oranges are $0.59 a pound.');
