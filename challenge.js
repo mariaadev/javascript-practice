@@ -124,7 +124,8 @@ async function manageStudents() {
 
     //Option 8
     function allGirls() {
-        return students.every(student => (
+        //Return true even when empty array, added condtion for empty array
+        return students.length === 0 ? "There aren't any students." : students.every(student => (
             student.gender === "female"
         ))
     }
@@ -169,21 +170,13 @@ async function manageStudents() {
     function createRandomStudent() {
         const gender = randomGender();
        //pick name, age, gender, empty scores
-        const newStudent =  {
+        students.push({
         age: generateRandomNum(20,50) ,
         examScores: [],
         gender: gender,
         name:gender === "female" ? pickRandomFemaleName() : pickRandomMaleName()
-       }    
-       return newStudent;
-    }
-    //Option 10
-    function addStudent() {
-        const newStudent = createRandomStudent();
-        // add new student
-        students.push({newStudent});
-        return `New student: ${newStudent.name} has been added.`
-
+       })
+       return `New student: ${students[students.length - 1].name} has been added.`
     }
 
     //Option 11
@@ -263,7 +256,7 @@ async function manageStudents() {
                 console.log(studentsByAge());
                 break;
             case 10:
-                console.log(addStudent());
+                console.log(createRandomStudent());
                 break;
             case 11:
                 console.log(getYoungest());
