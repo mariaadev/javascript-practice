@@ -56,7 +56,7 @@ async function manageStudents() {
     //Get user input
     function getUserOption() {
         return new Promise((resolve, reject) => {
-            rl.question('Introduce the number of your option, please: ', function (option) {
+            rl.question('Introduce a number to select your option, please: ', function (option) {
                 rl.pause();
                 const parsedOption = parseInt(option);
                 resolve(parsedOption);
@@ -80,40 +80,35 @@ async function manageStudents() {
     
     //Option 3
     function nameStudents () {
-        const names = []
+        const names = [];
         for (let student of students) {
-            names.push(student.name)
+            names.push(student.name);
         }
 
-        return names
+        return `Student names: ${names.join(", ")}`;
     } 
 
     //Option 4
-    
     function deleteStudent(){
-       const deletedStudent = students.pop()
+       const deletedStudent = students.pop();
 
        return `${deletedStudent.name} has been deleted from the classroom.`
     }
-        
+
     //Option 5
     function removeRandomStudent() {
-            //Don't add + 1 because array starts at 0
-            const randomIndex = Math.floor(Math.random() * students.length)
-            const removedStudent = students.splice(randomIndex,1)
-            let output = ""
-
-            if (students.length === 0 && removedStudent === undefined) {
-                output = "The are no students left in the classroom."
-            } else {
-                output = `${removedStudent[randomIndex].name} has been deleted from the classroom.`
-            }
-            
-            return output
+           if (students.length === 0) {
+            return  "There are no students left in the classroom"
+           } else {
+             //Don't add + 1 because array starts at 0
+             const randomIndex = Math.floor(Math.random() * students.length);
+             const removedStudent = students.splice(randomIndex,1);
+             
+             return `${removedStudent[0].name} has been deleted from the classroom.`
+           }
     }
 
     //Option 6
-
     function filterGirls () {
         return students.filter( student => (
             student.gender === "female"
@@ -121,7 +116,6 @@ async function manageStudents() {
     } 
 
     //Option 7
-
     function filterBoys () {
         return students.filter(student => (
             student.gender === "male"
@@ -153,28 +147,27 @@ async function manageStudents() {
     
         randomNum = randomNum + min;
     
-        return randomNum
+        return randomNum;
     
     }
     function pickRandomFemaleName() {
-        const randomIndex = Math.floor(Math.random() * students.length)
+        const randomIndex = Math.floor(Math.random() * students.length);
         
-        return availableFemaleNames[randomIndex]
+        return availableFemaleNames[randomIndex];
     }
     function pickRandomMaleName() {
-        const randomIndex = Math.floor(Math.random() * students.length)
+        const randomIndex = Math.floor(Math.random() * students.length);
         
-        return availableMaleNames[randomIndex]
+        return availableMaleNames[randomIndex];
     }
     function randomGender() {
-        const randomIndex = Math.floor(Math.random() * 2)
+        const randomIndex = Math.floor(Math.random() * 2);
         
         return randomIndex === 1 ? "female" : "male"
         
     }
     function createRandomStudent() {
-        debugger;
-        const gender = randomGender()
+        const gender = randomGender();
        //pick name, age, gender, empty scores
         const newStudent =  {
         age: generateRandomNum(20,50) ,
@@ -182,13 +175,13 @@ async function manageStudents() {
         gender: gender,
         name:gender === "female" ? pickRandomFemaleName() : pickRandomMaleName()
        }    
-       return newStudent
+       return newStudent;
     }
     //Option 10
     function addStudent() {
-        const newStudent = createRandomStudent()
+        const newStudent = createRandomStudent();
         // add new student
-        students.push({newStudent})
+        students.push({newStudent});
         return `New student: ${newStudent.name} has been added.`
 
     }
@@ -198,42 +191,40 @@ async function manageStudents() {
         //Compare age of the accumulator and age of the current value
         const theYoungest = students.reduce( (youngest,currentStudent) => {
             if (youngest.age < currentStudent.age) {
-                return youngest
+                return youngest;
             } else {
-                return currentStudent
+                return currentStudent;
             }
            
         })
 
-        return theYoungest.name
+        return theYoungest.name;
     }
 
     //Option 12
     function averageAge() {
         const totalAge = students.reduce((accum, currValue) => {
-            return accum.age += currValue.age
+            return accum.age += currValue.age;
         })
 
-        return totalAge / students.length
+        return totalAge / students.length;
     }
 
     //Option13
-
     function averageAgeGirls(){
-       const girls = filterGirls()
+       const girls = filterGirls();
        const totalAgeGirls = girls.reduce((accum,currValue) => {
-            return accum.age += currValue.age
+            return accum.age += currValue.age;
        })
-       return totalAgeGirls / girls.length
+       return totalAgeGirls / girls.length;
     }
-
     //Option 14
     function addNewScore() {
-        const scoresAdded = []
+        const scoresAdded = [];
         for (let student of students) {
-            let score = generateRandomNum(0,10)
-            let newScore = student.examScores.push(score)
-            scoresAdded.push(student.examScores[newScore - 1])
+            let score = generateRandomNum(0,10);
+            let newScore = student.examScores.push(score);
+            scoresAdded.push(student.examScores[newScore - 1]);
         }
 
         return `Scores : ${scoresAdded} have been added to the students.`
@@ -248,7 +239,7 @@ async function manageStudents() {
                 output = console.table(students);
                 break;
             case 2:
-                output = console.log(students.length);
+                output = console.log( students.length > 1 || students.length === 0 ? `There are ${students.length} students.`: `There is ${students.length} student.`);
                 break;
             case 3:
                 output = console.log(nameStudents());
@@ -295,7 +286,8 @@ async function manageStudents() {
         
         return output;
     }
-        //Close Console Interface
+    
+    //Close Console Interface
     rl.close();
 
 }
