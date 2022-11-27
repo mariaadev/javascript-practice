@@ -11,12 +11,8 @@ const students = [{
     examScores: [],
     gender: 'female',
     name: 'silvia'
-},{
-    age: 87,
-    examScores: [],
-    gender: 'female',
-    name: 'pepita'
-}]
+}
+]
 
 const availableMaleNames = ['pepe', 'juan', 'victor', 'Leo', 'francisco', 'carlos'];
 const availableFemaleNames = ['cecilia', 'ana', 'luisa', 'silvia', 'isabel', 'virginia'];
@@ -84,15 +80,36 @@ async function manageStudents() {
     
     //Option 3
     function nameStudents () {
+        const names = []
         for (let student of students) {
-            student.name;
+            names.push(student.name)
         }
+
+        return names
     } 
 
+    //Option 4
+    
+    function deleteStudent(){
+       const deletedStudent = students.pop()
+
+       return `${deletedStudent.name} has been deleted from the classroom.`
+    }
+        
     //Option 5
-    function removeRandomItem() {
-        //Don't add + 1 because array starts at 0
-        return students.splice(Math.floor(Math.random * students.length ),1);
+    function removeRandomStudent() {
+            //Don't add + 1 because array starts at 0
+            const randomIndex = Math.floor(Math.random() * students.length)
+            const removedStudent = students.splice(randomIndex,1)
+            let output = ""
+
+            if (students.length === 0 && removedStudent === undefined) {
+                output = "The are no students left in the classroom."
+            } else {
+                output = `${removedStudent[randomIndex].name} has been deleted from the classroom.`
+            }
+            
+            return output
     }
 
     //Option 6
@@ -127,7 +144,7 @@ async function manageStudents() {
     }
     
     //Option 10
-    function generateRandomAge(min, max) {
+    function generateRandomNum(min, max) {
         let difference = max - min;
         
         let randomNum = Math.random();
@@ -160,7 +177,7 @@ async function manageStudents() {
         const gender = randomGender()
        //pick name, age, gender, empty scores
         const newStudent =  {
-        age: generateRandomAge(20,50) ,
+        age: generateRandomNum(20,50) ,
         examScores: [],
         gender: gender,
         name:gender === "female" ? pickRandomFemaleName() : pickRandomMaleName()
@@ -209,6 +226,19 @@ async function manageStudents() {
        })
        return totalAgeGirls / girls.length
     }
+
+    //Option 14
+    function addNewScore() {
+        const scoresAdded = []
+        for (let student of students) {
+            let score = generateRandomNum(0,10)
+            let newScore = student.examScores.push(score)
+            scoresAdded.push(student.examScores[newScore - 1])
+        }
+
+        return `Scores : ${scoresAdded} have been added to the students.`
+    }
+
     function fetchOutput(input) {
     
         let output;
@@ -221,13 +251,13 @@ async function manageStudents() {
                 output = console.log(students.length);
                 break;
             case 3:
-                output = nameStudents();
+                output = console.log(nameStudents());
                 break;
             case 4:
-                output = console.log(students.pop());
+                output = console.log(deleteStudent());
                 break;
             case 5:
-                output = console.log(removeRandomItem());
+                output = console.log(removeRandomStudent());
                 break;
             case 6:
                 console.log(filterGirls());
@@ -254,13 +284,13 @@ async function manageStudents() {
                 console.log(averageAgeGirls());
                 break;
             case 14:
-                console.log('Mangoes and papayas are $2.79 a pound.');
+                console.log(addNewScore());
                 break;
             case 15:
-                console.log('Mangoes and papayas are $2.79 a pound.');
+                console.log(nameStudents().sort());
                 break;
             default:
-                console.log(`You didn't introduce a valid number.`);
+                console.log(`You didn't introduce a valid number. Try again please.`);
         }
         
         return output;
