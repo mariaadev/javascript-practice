@@ -170,12 +170,13 @@ async function manageStudents() {
     function createRandomStudent() {
         const gender = randomGender();
        //pick name, age, gender, empty scores
-        students.push({
+        const newStudent = ({
         age: generateRandomNum(20,50) ,
         examScores: [],
         gender: gender,
         name:gender === "female" ? pickRandomFemaleName() : pickRandomMaleName()
        })
+       students.push(newStudent)
        return `New student: ${students[students.length - 1].name} has been added.`
     }
 
@@ -195,29 +196,30 @@ async function manageStudents() {
     }
 
     //Option 12
-    function averageAge() {
-        let output = ""
-        if (students.length > 1) {
-            const totalAge = students.reduce((accum, currValue) => {
-                return accum.age += currValue.age;
-            })
-            output = `Average of students' age: ${ totalAge / students.length}`
-        } else if(students.length === 1) {
-            output = `Average of students age: ${students[0].age}`
-        } else {
-            output = "There are no students."
-        }
-       
-        return output
+    function averageAge() { 
+        let arr = Object.values(students);
+        let sum = (prev, cur) => ({age: prev.age + cur.age});
+        let avg = arr.reduce(sum).age / arr.length;
+ 
+        return `Average students age: ${avg}`
     }
 
     //Option13
     function averageAgeGirls(){
        const girls = filterGirls();
-       const totalAgeGirls = girls.reduce((accum,currValue) => {
+       let output = ""
+       if (girls.length > 1) {
+        const totalAgeGirls = girls.reduce((accum,currValue) => {
             return accum.age += currValue.age;
        })
-       return totalAgeGirls / girls.length;
+        output = `Average age of girl students: ${totalAgeGirls / girls.length}`
+       } else if (girls.length === 1) {
+        output = `Average age of girl students: ${girls[0].age}`
+       } else {
+        output = "There are no girl students."
+       }
+
+       return output
     }
     //Option 14
     function addNewScore() {
@@ -229,6 +231,19 @@ async function manageStudents() {
         }
 
         return `Scores : ${scoresAdded} have been added to the students.`
+    }
+
+    //Option 15
+    function sortByName() {
+        let output = ""
+        if (students.length > 1) {
+            output = nameStudents.sort()
+        } else if(students.length === 1) {
+            output = students[0].name
+        } else {
+            output = "There are no students."
+        }
+        return output
     }
 
     function fetchOutput(input) {
@@ -279,7 +294,7 @@ async function manageStudents() {
                 console.log(addNewScore());
                 break;
             case 15:
-                console.log(nameStudents().sort());
+                console.log(sortByName());
                 break;
             default:
                 console.log(`You didn't introduce a valid number. Try again please.`);
