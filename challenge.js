@@ -11,6 +11,11 @@ const students = [{
     examScores: [],
     gender: 'female',
     name: 'silvia'
+},{
+    age: 87,
+    examScores: [],
+    gender: 'female',
+    name: 'pepita'
 }]
 
 const availableMaleNames = ['pepe', 'juan', 'victor', 'Leo', 'francisco', 'carlos'];
@@ -121,6 +126,7 @@ async function manageStudents() {
         )
     }
     
+    //Option 10
     function generateRandomAge(min, max) {
         let difference = max - min;
         
@@ -169,6 +175,40 @@ async function manageStudents() {
         return `New student: ${newStudent.name} has been added.`
 
     }
+
+    //Option 11
+    function getYoungest() {
+        //Compare age of the accumulator and age of the current value
+        const theYoungest = students.reduce( (youngest,currentStudent) => {
+            if (youngest.age < currentStudent.age) {
+                return youngest
+            } else {
+                return currentStudent
+            }
+           
+        })
+
+        return theYoungest.name
+    }
+
+    //Option 12
+    function averageAge() {
+        const totalAge = students.reduce((accum, currValue) => {
+            return accum.age += currValue.age
+        })
+
+        return totalAge / students.length
+    }
+
+    //Option13
+
+    function averageAgeGirls(){
+       const girls = filterGirls()
+       const totalAgeGirls = girls.reduce((accum,currValue) => {
+            return accum.age += currValue.age
+       })
+       return totalAgeGirls / girls.length
+    }
     function fetchOutput(input) {
     
         let output;
@@ -205,13 +245,13 @@ async function manageStudents() {
                 console.log(addStudent());
                 break;
             case 11:
-                console.log('Oranges are $0.59 a pound.');
+                console.log(getYoungest());
                 break;
             case 12:
-                console.log('Mangoes and papayas are $2.79 a pound.');
+                console.log(averageAge());
                 break;
             case 13:
-                console.log('Mangoes and papayas are $2.79 a pound.');
+                console.log(averageAgeGirls());
                 break;
             case 14:
                 console.log('Mangoes and papayas are $2.79 a pound.');
