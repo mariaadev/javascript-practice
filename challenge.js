@@ -196,11 +196,19 @@ async function manageStudents() {
 
     //Option 12
     function averageAge() {
-        const totalAge = students.reduce((accum, currValue) => {
-            return accum.age += currValue.age;
-        })
-
-        return totalAge / students.length;
+        let output = ""
+        if (students.length > 1) {
+            const totalAge = students.reduce((accum, currValue) => {
+                return accum.age += currValue.age;
+            })
+            output = `Average of students' age: ${ totalAge / students.length}`
+        } else if(students.length === 1) {
+            output = `Average of students age: ${students[0].age}`
+        } else {
+            output = "There are no students."
+        }
+       
+        return output
     }
 
     //Option13
